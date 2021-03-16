@@ -30,10 +30,8 @@ exports.login = (req, res, next) => {
     let parameters = [req.body.email, req.body.pseudo, req.body.password];
     bdd.query ('SELECT * FROM Utilisateurs WHERE email= ? OR pseudo= ?', parameters, (err, results) => {
         if (err) throw err;
-        console.log(results[0].pseudo);
         console.log(results[0].password);
-        console.log(req.body.password);    
-
+ 
 if(results){
     bcrypt.compare(req.body.password, results[0].password) // Comparaison du mot de passe saisie avec le hash enregistré en BDD
     .then((valid) => {
@@ -46,7 +44,7 @@ if(results){
             token: jwt.sign(
                 { userId: results[0].id },
                 'RANDOM_TOKEN_SECRET',
-                { expiresIn: '1h' }
+                { expiresIn: '24h' }
             ),
             pseudo: results[0].pseudo
           });

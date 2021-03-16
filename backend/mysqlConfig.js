@@ -5,7 +5,7 @@ const bdd = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "icecream94",
-  database: "bddp7",
+  database: "Groupomania",
 })
 
 bdd.connect(function(error) {
