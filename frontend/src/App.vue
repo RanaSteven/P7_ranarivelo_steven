@@ -3,7 +3,7 @@
     <div id="nav" v-if="$store.state.connexion == true">
       <ul>
         <li>
-          <a href="#">
+          <a href="#Home">
             <span class="iconLogo"><img src="./assets/logo.png" alt=""></span>
             <span class="titleLogo">Groupomania</span>
           </a>
@@ -201,242 +201,6 @@ header{
   z-index: 2;
 }
 
-#toggleMenu svg{
-  color: white;
-  font-size: 35px;
-  transition: .3s;
-}
-
-#toggleMenu svg:hover{
-  color: rgb(255, 106, 0);
-}
-
-.toogleMenuActive{
-  transform: rotate(90deg);
-}
-
-.toogleMenuActive svg{
-  color: rgb(255, 106, 0)!important;
-}
-
-/* Style du menu Nav Admin ---------------------------------------*/
-.navAdmin{
-  text-align: center;
-  margin-top: 10px;
-}
-
-.navAdmin a{
-  font-family: 'Inconsolata', monospace;
-  position: relative;
-  display: inline-block;
-  padding: 15px 30px;
-  color: #52b1ff;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-decoration: none;
-  font-size: 15px;
-  overflow:hidden;
-  transition: 0.2s;
-}
-
-.navAdmin a:hover{
-  color: #255784;
-  background: #2196f3;
-  box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
-  transition-delay: 1s;
-}
-
-.navAdmin a span{
-  position: absolute;
-  display: block;
-}
-
-.navAdmin a span:nth-child(1){
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #2196f3);
-}
-
-.navAdmin a:hover span:nth-child(1){
-  left: 100%;
-  transition: 1s;
-}
-
-.navAdmin a span:nth-child(2){
-  top: -100%;
-  right: 0;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(180deg, transparent, #2196f3);
-}
-
-.navAdmin a:hover span:nth-child(2){
-  top: 100%;
-  transition: 1s;
-  transition-delay: 0.25s;
-}
-
-.navAdmin a span:nth-child(3){
-  bottom: 0;
-  right: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(270deg, transparent, #2196f3);
-}
-
-.navAdmin a:hover span:nth-child(3){
-  right: 100%;
-  transition: 1s;
-  transition-delay: 0.5s;
-}
-
-.navAdmin a span:nth-child(4){
-  bottom: -100%;
-  left: 0;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(360deg, transparent, #2196f3);
-}
-
-.navAdmin a:hover span:nth-child(4){
-  bottom: 100%;
-  transition: 1s;
-  transition-delay: 0.75s;
-}
-
-/* classe .enAttente */
-
-.navAdmin .enAttente{
-  font-family: 'Inconsolata', monospace;
-  position: relative;
-  display: inline-block;
-  padding: 15px 30px;
-  color:  rgb(255, 106, 0);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-decoration: none;
-  font-size: 15px;
-  overflow:hidden;
-  transition: 0.2s;
-}
-
-.navAdmin .enAttente:hover{
-  color: #660000;
-  background:  rgb(255, 106, 0);
-  box-shadow: 0 0 10px  rgb(255, 106, 0), 0 0 40px  rgb(255, 106, 0), 0 0 80px  rgb(255, 106, 0);
-  transition-delay: 1s;
-}
-
-.navAdmin .enAttente span{
-  position: absolute;
-  display: block;
-}
-
-.navAdmin .enAttente span:nth-child(1){
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent,  rgb(255, 106, 0));
-}
-
-.navAdmin .enAttente:hover span:nth-child(1){
-  left: 100%;
-  transition: 1s;
-}
-
-.navAdmin .enAttente span:nth-child(2){
-  top: -100%;
-  right: 0;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(180deg, transparent,  rgb(255, 106, 0));
-}
-
-.navAdmin .enAttente:hover span:nth-child(2){
-  top: 100%;
-  transition: 1s;
-  transition-delay: 0.25s;
-}
-
-.navAdmin .enAttente span:nth-child(3){
-  bottom: 0;
-  right: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(270deg, transparent,  rgb(255, 106, 0));
-}
-
-.navAdmin .enAttente:hover span:nth-child(3){
-  right: 100%;
-  transition: 1s;
-  transition-delay: 0.5s;
-}
-
-.navAdmin .enAttente span:nth-child(4){
-  bottom: -100%;
-  left: 0;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(360deg, transparent,  rgb(255, 106, 0));
-}
-
-.navAdmin .enAttente:hover span:nth-child(4){
-  bottom: 100%;
-  transition: 1s;
-  transition-delay: 0.75s;
-}
-
-/* #profilAdmin */
-
-#profilAdmin{
-  position: fixed;
-  right: 0;
-  top: 200px;
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 10px;
-  color: #ffffff;
-  font-family: 'Inconsolata', monospace;
-  font-size: 15px;
-  z-index: 5;
-}
-
-#profilAdmin img{
-  width: 30px;
-  height: 30px;
-  margin-left: -7px;
-  border:solid white 1px;
-  border-radius: 100px;
-  vertical-align: middle;
-}
-
-/* .homeAdmin */
-
-.homeAdmin{
-  position: fixed;
-  right: 0;
-  top: 90px;
-  background-color: rgba(0, 0, 0, 0.8);
-  font-family: 'Inconsolata', monospace;
-  font-size: 15px;
-  z-index: 5;
-}
-
-.homeAdmin a{
-  text-decoration: none;
-  color: #ffffff;
-  font-size: 25px;
-  display: block;
-  margin: 15px 10px;
-  transition: .5s;
-}
-
-.homeAdmin a:hover{
-  color: rgb(255, 106, 0);
-}
-
 /* Styles généraux ---------------------------------------*/
 
 .fade-enter-active{
@@ -503,34 +267,6 @@ header{
   color: white;
 }
 
-.casePublication .fa-share{
-  font-size: 20px;
-  vertical-align: top;
-  margin-top: 28px;
-  margin-right: 4%;
-  float: right;
-  transition: .5s;
-  cursor:pointer;
-}
-
-.casePublication .fa-share:hover{
-  color:  rgb(255, 106, 0);
-}
-
-.corps .case .fa-paper-plane{
-  font-size: 50px;
-  vertical-align: top;
-  margin-top: 28px;
-  margin-right: 4%;
-  float: right;
-  color:  rgb(255, 106, 0);
-  transition: .5s;
-  cursor:pointer;
-}
-
-.corps .case .fa-paper-plane:hover{
-  opacity: 0.5;
-}
 
 .case1Hr{
   height: 1px;
@@ -539,40 +275,10 @@ header{
   width: 90%;
 }
 
-.btnUploadImg{
-  width: 20%;
-  transition: .2s;
-  padding: 5px;
-  text-align: center;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 15px;
-  color: white;
-  margin: 20px auto 0;
-  border-radius: 7px;
-  cursor:pointer;
-}
-
-.btnUploadImg svg{
-  color: rgb(255, 106, 0);
-  font-size: 20px;
-  cursor:pointer;
-}
-
-.btnUploadImg:hover{
-  background-color:#777777;
-}
 
 #preview{
   width: 100%;
   text-align: center;
-}
-
-#preview img{
-  width: 20%;
-  vertical-align: middle;
-  margin: 10px;
-  border: 5px white solid;
-  box-shadow: black 5px 5px 5px;
 }
 
 .casePublication{
@@ -594,47 +300,6 @@ header{
 
 .conteneurVFor{
   text-align: center;
-}
-
-.conteneurImg{
-  display: inline-block;
-  width: 20%;
-  margin: 15px;
-}
-
-.conteneurImg img{
-  width: 100%;
-  transition: 0.3s;
-  cursor:pointer;
-}
-
-.conteneurImg img:hover{
-  opacity: 0.7;
-  transform: scale(1.2);
-}
-
-.casePublication .like{
-  width: 100%;
-  text-align: end;
-}
-
-.casePublication .like div{
-  width: 60px;
-  margin-left: 70%;
-}
-
-.casePublication .like svg{
-  font-size: 30px;
-  transition: .3s;
-  cursor: pointer;
-}
-
-.casePublication .like svg:hover, .likeActive{
-  color:  rgb(255, 106, 0);
-}
-
-.casePublication .like .likeNb{
-  margin-right: 10px;
 }
 
 .boxComm{

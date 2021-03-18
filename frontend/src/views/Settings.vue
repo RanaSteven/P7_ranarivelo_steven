@@ -7,8 +7,6 @@
       <li>|</li>
       <li class="onglet" @click="this.fenetreModif = 1">Photo de profil</li>
       <li>|</li>
-      <li class="onglet" @click="this.fenetreModif = 2">Photo de couverture</li>
-      <li>|</li>
       <li class="onglet" @click="this.fenetreModif = 3">Mot de passe</li>
       <li>|</li>
       <li class="onglet supprCompteTitre" @click="this.fenetreModif = 4"><span style="color:red;">Supprimer le compte</span></li>
@@ -30,12 +28,8 @@
         </div>
 
         <div class="inputBox">
-          <select class="menuGenre" v-model="genre">
-            <option value="0">Homme 👦</option>
-            <option value="1">Femme 👩</option>
-            <option value="2">Autre</option>
-          </select>
-          <label>Genre</label>
+          <input type="text" v-model="pseudo" id="pseudo">
+          <label>Pseudo</label>
         </div>
 
         <input type="submit" name="" value="Valider" @click="recuperationModifProfilForm">
@@ -47,12 +41,6 @@
     <div class="box" v-else-if="fenetreModif == 1" key="modifPhotoProfil">
       <h2><i class="fas fa-images"></i> Nouvelle photo de profil</h2>
       <form name="modifPhotoProfilForm" onsubmit="return false;">
-
-        <div class="inputBox boxPhotoProfil">
-
-          <input type="file" id="uploadImg" name="uploadImg" accept="image/png, image/jpeg" @change="handleFiles()">
-        </div>
-        <div id="previewSettings"></div>
 
         <input type="submit" name="" value="Valider" @click="envoiModifPhotoProfil">
 

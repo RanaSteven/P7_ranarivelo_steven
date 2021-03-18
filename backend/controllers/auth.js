@@ -27,33 +27,39 @@ exports.signup = (req, res, next) => {
 };
     
 exports.login = (req, res, next) => {
-    let parameters = [req.body.email, req.body.pseudo, req.body.password];
-    bdd.query ('SELECT * FROM Utilisateurs WHERE email= ? OR pseudo= ?', parameters, (err, results) => {
-        if (err) throw err;
-        console.log(results[0].password);
- 
-if(results){
-    bcrypt.compare(req.body.password, results[0].password) // Comparaison du mot de passe saisie avec le hash enregistré en BDD
+    let parameters = [req.body.email, req.body.password];
+    bdd.query ('SELECT * FROM Utilisateurs WHERE email= ?', parameters, (err, results) => {
+        // if (err) throw err;
+        // console.log(results[0].pseudo);
+        // console.log(results[0].password);    
+    if(results.length == 0){
+        res.json({ status: 'userInconnu', message: `Désolé, cet utilisateur n'existe pas.`});
+      }else{
+bcrypt.compare(req.body.password, results[0].password) // Comparaison du mot de passe saisie avec le hash enregistré en BDD
     .then((valid) => {
         if(!valid){
             console.log('Mot de passe incorrecte');
-            return res.status(401).json({ error: "Mot de passe incorrect !" });
+            return res.json({ status: 'passwordInvalide', message: `Mot de passe incorrect.`});
         }
         res.status(200).json({
+            status: 'profilAutorise',
             userId: results[0].id,
             token: jwt.sign(
                 { userId: results[0].id },
                 'RANDOM_TOKEN_SECRET',
                 { expiresIn: '24h' }
             ),
+            nom: results[0].nom,
+            prenom: results[0].prenom,
             pseudo: results[0].pseudo
           });
           console.log(results);
         })
-    .catch(error => {
-        console.log('Erreur');
-    })
-}
+        .catch(error => res.status(500).json({ error }));
+    }
+    if(err){
+        res.status(500).json({ error });
+    }
 })
 }
 

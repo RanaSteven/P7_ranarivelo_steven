@@ -302,13 +302,6 @@ export default {
            this.prenomValide = false;
          }
 
-         if (/^([a-zA-Z]){2,15}$/.test(this.pseudo)) {
-           this.pseudoValide = true;
-         }else{
-           document.getElementById("pseudo").setCustomValidity("Champ invalide");
-           this.pseudoValide = false;
-         }
-
          if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
            this.emailValide = true;
          }else{
@@ -349,11 +342,12 @@ export default {
       axios
       .post('http://localhost:3000/auth'+url, objetSend, {
         headers:{
+          'Authorization': 'Bearer ' + this.$store.state.token,
           "Content-Type": "application/json",
         }
       })
       .then(response => {
-        if (response.data.status =="error" || response.data.status =="userInconnu" || response.data.status =="passwordInvalide") {
+        if (response.data.status =="userInconnu" || response.data.status =="passwordInvalide") {
           alert(response.data.message);          
         }else if(response.data.status == "OK"){
           alert(response.data.message);
@@ -366,7 +360,7 @@ export default {
           this.$store.commit('MUTATION_PRENOM', response.data.prenom);
           this.$router.push({ name: 'Home' });
 
-          //console.log(this.$store.state.userID +": "+ this.$store.state.token)
+          console.log(this.$store.state.userId +": "+ this.$store.state.token)
         }else{
           throw new Error("Valeurs non reconnues");
         }

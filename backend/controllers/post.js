@@ -9,6 +9,7 @@ exports.createPost = (req, res, next) => {
       
     console.log ('Données reçues de Db:');
     console.log (res);
+    console.log('publication envoyée !')
     });
 }
 

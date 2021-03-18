@@ -6,8 +6,8 @@ const router = express.Router();
 const postsControllers = require('../controllers/post');
 
 router.get('/:id', postsControllers.getAllIdPosts);
-router.get('/', postsControllers.getAllPosts);
-router.post('/', postsControllers.createPost);
+router.get('/', auth, postsControllers.getAllPosts);
+router.post('/', auth, postsControllers.createPost);
 router.put('/modify/:id', postsControllers.modifyPost);
 router.delete('/delete/:id', postsControllers.deletePost);
 

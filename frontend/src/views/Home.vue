@@ -10,7 +10,7 @@
       </div>
 
       <div class="case casePublication" v-for="publication in publications" :key="publication">
-        <h2>{{ publication.title }} {{ publication.content }}</h2>
+        <h2>{{ publication.title }}</h2>
         <hr class="case1Hr">
         <p>{{ publication.content }}</p>
       </div>
@@ -28,64 +28,50 @@ export default {
 			sousTitre: "Fil d'actualité",
       title: null,
       content: null,
-      textPublication : "",
-      titlePublication : "",
-      
+      titlePublication: "",
+      textPublication: "", 
     }
   },
   beforeMount() {
     if(this.$store.state.connexion == true){
       document.getElementById("conteneur").style.marginLeft = "60px";
+      console.log(this.$store.state.token);
     }else{
       this.$router.push({ name: 'Auth' });
     }
-
   },
-  mounted() { // Requete pour récupérer toutes les publications
-    axios
-      .get('http://localhost:3000/post' , {
-        headers: {
-          'Authorization': 'Bearer ' + this.$store.state.token,
-          "Content-Type": "application/json",
-        }
-      })
-      .then(response => {
-        this.publications = response.data;
-        console.log(this.publications[1].posts);
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-        console.log('erreur');
-      });
-  },
+  
   methods:{
+    
     envoiPublication(){ // Récupère les données de la nouvelle publication créée, et les envoie par une requete post
-      if (this.textPublication != "") {
+      if (this.textPublication && this.titlePublication != "") {
 
         let formData = new FormData();
         formData.append('userId', this.$store.state.userId);
         formData.append('title', this.titlePublication);
         formData.append('content', this.textPublication);
+        
+
         axios
         .post('http://localhost:3000/post',formData, {
           headers:{
             'Authorization': 'Bearer ' + this.$store.state.token,
             "Content-Type": "application/json",
           }
+          
         })
         .then(
           alert("Publication envoyée !"),
-          setTimeout(() => {  window.location.reload() }, 1000),
         )
         .catch(function (error) {
           console.log(error);
+          console.log('erreur');
         });
 
       }else{
-        alert("Cette publication est vide !");
+        alert("Il manque un titre ou un contenu à la publication !");
       }
-    }
+    },
   },
 }
 </script>
