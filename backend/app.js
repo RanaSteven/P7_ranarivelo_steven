@@ -9,7 +9,6 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const commentRoutes = require('./routes/comments');
 const postRoutes = require('./routes/posts');
-const res = require('./controllers/user');
 
 app.use(helmet());
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -27,7 +26,6 @@ app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/comment', commentRoutes);
 app.use('/post', postRoutes);
-console.log(res);
 
 
 module.exports = app;

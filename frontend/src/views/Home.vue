@@ -1,21 +1,21 @@
 <template>
-  <h1>{{ sousTitre }}</h1>
-
   <div class="corps">
-      <div class="case">
-        <textarea id="uploadPublication" v-model="titlePublication" placeholder="Titre"></textarea>
-        <textarea id="uploadPublication" v-model="textPublication"></textarea>
-        <input type="submit" name="" value="Publier" @click="envoiPublication">
-        <hr class="case1Hr">
+    <div class="case">
+      <textarea class="uploadContent" v-model="contentPublication" placeholder="Que voulez-vous dire ?"></textarea>
+      <input type="submit" class="inputPost" value="Publier" @click="envoiPost">
+    </div>
+    <h1>{{ sousTitre }}</h1>
+    <div class="case" v-for="publication in publications" :key="publication">
+      <p class="labelPubli">{{ publication.content }}</p>
+      <p class="labelComm">commentaires :</p>
+      <div class="boxComments">
+      <p>{{ publication.comment1 }}</p>
+      <p>{{ publication.comment2 }}</p>
       </div>
-
-      <div class="case casePublication" v-for="publication in publications" :key="publication">
-        <h2>{{ publication.title }}</h2>
-        <hr class="case1Hr">
-        <p>{{ publication.content }}</p>
-      </div>
+      <textarea class="uploadComment" v-model="contentComment" placeholder="Commentaire"></textarea>
+      <input type="submit" class="inputComment" value="Commenter" @click="envoiComment">
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -24,56 +24,94 @@ import axios from 'axios'
 export default {
 	data() {
 		return {
-      loading: true,
+      publications: null,
 			sousTitre: "Fil d'actualité",
-      title: null,
-      content: null,
       titlePublication: "",
-      textPublication: "", 
+      contentPublication: "",
+      contentComment: "",
+      content: null,
     }
   },
   beforeMount() {
     if(this.$store.state.connexion == true){
-      document.getElementById("conteneur").style.marginLeft = "60px";
       console.log(this.$store.state.token);
+      document.getElementById("conteneur").style.marginTop ="100px";
     }else{
       this.$router.push({ name: 'Auth' });
     }
   },
-  
+
+  mounted() { // Requete pour récupérer toutes les publications
+    axios.get('http://localhost:3000/post', {
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token,
+          "Content-Type": "application/json",
+        }
+      })
+      .then(response => {
+        this.publications = response.data.elements;
+        console.log(response.data);
+      },
+      console.log("Requête envoyée !"),)
+      .catch(function (error) {
+        console.log(error);
+        console.log('erreur');
+      });
+  },
+
   methods:{
-    
-    envoiPublication(){ // Récupère les données de la nouvelle publication créée, et les envoie par une requete post
-      if (this.textPublication && this.titlePublication != "") {
-
-        let formData = new FormData();
-        formData.append('userId', this.$store.state.userId);
-        formData.append('title', this.titlePublication);
-        formData.append('content', this.textPublication);
-        
-
-        axios
-        .post('http://localhost:3000/post',formData, {
-          headers:{
+    envoiPost() {
+      if (this.contentPublication != ""){
+        axios.post('http://localhost:3000/post/createPost', {
+            content: this.contentPublication,
+            Utilisateurs_id: this.$store.state.userId
+        },
+        {
+          headers: {
             'Authorization': 'Bearer ' + this.$store.state.token,
             "Content-Type": "application/json",
           }
-          
         })
         .then(
           alert("Publication envoyée !"),
+          setTimeout(() => {  window.location.reload() }, 1000),
         )
         .catch(function (error) {
           console.log(error);
-          console.log('erreur');
         });
+      }
+      else{
+        alert("La publication est vide !");
+      }
+    },
 
-      }else{
-        alert("Il manque un titre ou un contenu à la publication !");
+    envoiComment() {
+      if (this.contentComment != ""){
+
+        axios.post('http://localhost:3000/comment/createComment', {
+            contents: this.contentComment,
+            Utilisateurs_id: this.$store.state.userId,
+        },
+        {
+          headers: {
+            'Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json",
+          }
+        })
+        .then(
+          alert("Commentaire envoyé !"),
+          //setTimeout(() => {  window.location.reload() }, 1000),
+        )
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
+      else{
+        alert("La publication est vide !");
       }
     },
   },
-}
+} 
 </script>
 
 <style scoped>

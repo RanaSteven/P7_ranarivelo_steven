@@ -19,19 +19,17 @@ exports.signup = (req, res, next) => {
             let parameters = [req.body.prenom, req.body.nom, req.body.email, req.body.pseudo, hash];
             bdd.query ("INSERT INTO Utilisateurs (prenom, nom, email, pseudo, password) VALUES(?, ?, ?, ?, ?)", parameters, (err, res) => {
                 if (err) throw err;
-                    
-        console.log ('Utilisateur créé !');
-        console.log (res);
-        });
-    })
+            })
+            res.json({ statut: 'OK', message: 'Inscription réussie !'});
+        })
+         .catch(error =>{
+            res.json({ status: 'invalideUser', message: `Désolé, l'utilisateur n'a pas été créé !`});
+        })
 };
     
 exports.login = (req, res, next) => {
     let parameters = [req.body.email, req.body.password];
-    bdd.query ('SELECT * FROM Utilisateurs WHERE email= ?', parameters, (err, results) => {
-        // if (err) throw err;
-        // console.log(results[0].pseudo);
-        // console.log(results[0].password);    
+    bdd.query ('SELECT * FROM Utilisateurs WHERE email= ?', parameters, (err, results) => { 
     if(results.length == 0){
         res.json({ status: 'userInconnu', message: `Désolé, cet utilisateur n'existe pas.`});
       }else{
@@ -62,53 +60,3 @@ bcrypt.compare(req.body.password, results[0].password) // Comparaison du mot de 
     }
 })
 }
-
-// if(results.length == 0){
-//     res.json({ statut: 'inconnu', message: `Désolé, cet utilisateur n'existe pas.`});
-//   }else{
-//     bcrypt.compare(req.body.password, results[0].password)
-//     .then(valid => {
-//       if (!valid) {
-//         return res.json({ statut: 'pwdInvalide', message: 'Mot de passe incorrect !' });
-//       }
-//       res.status(200).json({
-//         statut: 'profilValide',
-//         userId: results[0].id,
-//         token: jwt.sign(
-//           {userId: results[0].id},
-//           'RANDOM_TOKEN_SECRET',
-//           {expiresIn: '24h'}
-//         ),
-//         nom: results[0].nom,
-//         prenom: results[0].prenom,
-//         urlPhotoProfil: results[0].url_photo_profil
-//       });
-//       var sql = `UPDATE users SET derniere_connexion = ` + `'` + new Date().getFullYear() + `-` + (new Date().getMonth()+1) + `-` + new Date().getDate() + ` ` + new Date().getHours() + `:` + new Date().getMinutes() + `:` + new Date().getSeconds() + `'` + ` WHERE id= ` + results[0].id;
-//       config.connection.query (sql, results[0].id, function(err, results){
-//         if(err) throw err;
-//       })
-//     })
-//     .catch(error => res.status(500).json({ error }));
-//   }
-//   if(err){
-//     res.status(500).json({ error });
-//   }
-
-// if (req.body.pseudo && req.body.email !== results[0].pseudo && results[0].email) {
-//     throw 'Nom d\'utilisateur introuvable !';
-//   } else {
-//     next();
-//   }
-// } catch {
-//   res.status(401).json({
-//     error: new Error('Requête invalide !')
-//   });
-// }
-
-// req.body.email || req.body.pseudo, results[0].email || results[0].pseudo
-//     .then((valid) =>{
-//         if(!valid){
-//             console.log('Email ou Pseudo incorrect !');
-//             return res.status(401).json({ error: "Email ou Pseudo incorrect !" });
-//     }})
-

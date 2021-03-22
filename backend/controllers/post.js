@@ -1,10 +1,93 @@
 const mysql = require('mysql');
-const fs = require('fs');
 const bdd = require('../mysqlConfig');
+const bcrypt = require('bcrypt');
+const fs = require('fs');
+
+exports.getAllPosts = (req, res, next) => {
+  let response;
+  bdd.query ('SELECT * FROM Posts ORDER BY idPosts DESC', (err, resAllPosts) => {
+    if (err){
+      throw err;
+    }
+    else{
+      bdd.query ('SELECT * FROM Comments', (err, resAllComments) => {
+      let elements= [];
+    resAllPosts.forEach(post => {
+      post.comment1 = null;
+      post.comment2 = null;
+        resAllComments.forEach(comment => {
+        if(comment.Posts_idPosts == post.idPosts){
+          if(post.comment1 == null){
+            post.comment1 = comment.contents;
+          console.log(post);
+          }
+          else if(post.comment2 == null){
+            post.comment2 = comment.contents;
+          console.log(post);
+        }
+      }
+      });
+      elements.push(post);
+    });
+    console.log(elements);
+      response = {"posts": resAllPosts, "comment": resAllComments, "elements": elements}
+      res.status(200).json(response);
+      })
+    }
+  });
+}
+
+exports.adminGetAllPosts = (req, res, next) => {
+  let response;
+  bdd.query ('SELECT * FROM Posts ORDER BY idPosts DESC', (err, resAllPosts) => {
+    if (err){
+      throw err;
+    }
+    else{
+      bdd.query ('SELECT * FROM Comments ORDER BY idComments DESC', (err, resAllComments) => {
+      let elements= [];
+    resAllPosts.forEach(post => {
+      post.comment1 = null;
+      post.comment2 = null;
+        resAllComments.forEach(comment => {
+        if(comment.Posts_idPosts == post.idPosts){
+          if(post.comment1 == null){
+            post.comment1 = comment.contents;
+          console.log(post);
+          }
+          else if(post.comment2 == null){
+            post.comment2 = comment.contents;
+          console.log(post);
+        }
+      }
+      });
+      elements.push(post);
+    });
+    console.log(elements);
+      response = {"posts": resAllPosts, "comment": resAllComments, "elements": elements}
+      res.status(200).json(response);
+      })
+    }
+  });
+}
+
+exports.getAllIdPosts = (req, res, next) => {
+  let response;
+  let parameters = [req.params.id];
+  bdd.query ('SELECT * FROM Posts WHERE Utilisateurs_id=?', parameters, (err, resPostsId) => {
+    if (err){
+      throw err;
+    }
+    else{
+      response = resPostsId;
+      res.status(200).json(response);
+    }
+  });
+}
 
 exports.createPost = (req, res, next) => {
-    let parameters = [req.body.title, req.body.content, req.body.Utilisateurs_id];
-    bdd.query ('INSERT INTO Posts (title, content, Utilisateurs_id) VALUES(?, ?, ?)', parameters, (err, res) => {
+    let parameters = [req.body.content, req.body.Utilisateurs_id];
+    bdd.query ('INSERT INTO Posts (content, Utilisateurs_id) VALUES(?, ?)', parameters, (err, res) => {
         if (err) throw err;
       
     console.log ('Données reçues de Db:');
@@ -19,32 +102,13 @@ exports.modifyPost = (req, res, next) => {
         if (err) throw err;
       
       console.log ('Données reçues de Db:');
-      console.log (res);
+      console.log (req.body.content);
       });
 }
 
 exports.deletePost = (req, res, next) => {
     let parameters = [req.body.idPosts];
     bdd.query ('DELETE FROM Posts WHERE idPosts= ?', parameters, (err, res) => {
-        if (err) throw err;
-      
-      console.log ('Données reçues de Db:');
-      console.log (res);
-      });
-}
-
-exports.getAllIdPosts = (req, res, next) => {
-    let parameters = [req.body.Utilisateurs_id];
-    bdd.query ('SELECT * FROM Posts WHERE Utilisateurs_id= ?', parameters, (err, res) => {
-        if (err) throw err;
-      
-      console.log ('Données reçues de Db:');
-      console.log (res);
-      });
-}
-
-exports.getAllPosts = (req, res, next) => {
-    bdd.query ('SELECT * FROM Posts', (err, res) => {
         if (err) throw err;
       
       console.log ('Données reçues de Db:');

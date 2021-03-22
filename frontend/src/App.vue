@@ -16,13 +16,7 @@
         </li>
 
         <li>
-          <div id="search">
-            <input class="inputSearch" type="search" placeholder="Rechercher un utilisateur" @keyup.enter="checkResearch" v-model="userSearch">
-          </div>
-        </li>
-
-        <li>
-          <router-link :to="'/user/' + this.$store.state.userId">
+          <router-link to="/profile">
             <span class="title">Profil</span>
           </router-link>
         </li>
@@ -42,25 +36,13 @@
     </div>
   </header>
 
-  <fingerprint-spinner v-if="this.chargement == false"
-    :animation-duration="1500"
-    :size="64"
-    color="#ff1d5e"
-  />
-    
   <div id="conteneur">
-    <!--<transition appear name="fade" mode="out-in">-->
-      <router-view/>
-    <!--</transition>-->
+     <router-view/>
   </div>
 
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
-
 body{
   margin: 0;
   padding: 0;
@@ -79,88 +61,38 @@ header{
   padding: 0;
   box-sizing: border-box;
   position:fixed;
-  width: 60px;
-  height:100%;
+  height: 80px;
+  width:100%;
   background-color: rgba(0, 0, 0, 0.8);
-  transition: 0.5s;
-  overflow: hidden;
-  z-index: 10;
-}
-
-#nav:hover, .navActive{
-  width: 300px!important;
+  z-index: 1;
 }
 
 #nav ul{
-  position: absolute;
+  position: relative;
+  display: flex;
   top:0;
   left:0;
   width: 100%;
-  color: #ffffff;
-}
-
-#nav ul li{
-  position:relative;
-  width: 100%;
-  list-style: none;
-}
-
-#nav ul li a, #search{
-  position: relative;
-  display: block;
-  width: 100%;
-  display: flex;
   text-decoration: none;
   color: #ffffff;
 }
 
-#nav ul li a:hover, #search:hover{
-  color: rgb(255, 106, 0);
+#nav ul li{
+  list-style: none;
 }
 
-#nav ul li a .icon, #search .icon{
-  position: relative;
-  display: block;
-  min-width: 40px;
-  height: 60px;
-  line-height: 60px;
-  margin-left: -19px;
-}
-
-#nav ul li a .iconLogo{
-  position: relative;
-  display: block;
-  min-width: 40px;
-  height: 60px;
-  line-height: 60px;
-  margin-left: -19px;
-}
-
-#nav ul li a .iconProfil{
-  position: relative;
-  display: block;
-  min-width: 40px;
-  line-height: 60px;
-  margin-left: -19px;
+#nav ul li a{
+  color: #ffffff;
 }
 
 #nav ul li a .iconLogo img{
-  width: 35px;
-  margin-left: -10px;
-}
-
-#nav ul li a .iconProfil img{
   width: 30px;
-  height: 30px;
-  margin-left: -7px;
-  border:solid white 1px;
-  border-radius: 100px;
-  vertical-align: middle;
+  margin-left: -20px;
+  margin-right: 5px;
 }
 
 #nav ul li a .title{
   position: relative;
-  display: block;
   padding: 0 10px;
   height: 60px;
   line-height: 60px;
@@ -168,17 +100,6 @@ header{
   white-space: nowrap;
 }
 
-.inputSearch{
-  padding: 0 10px;
-  height: 30px;
-  margin-top: 15px;
-  text-align: start;
-  border: none;
-  border-radius: 50px;
-  width: 58%;
-  color: #ffffff;
-  background-color:#494949;
-}
 
 #nav ul li a .titleLogo{
   position: relative;
@@ -187,49 +108,34 @@ header{
 }
 
 #nav a.router-link-exact-active{
-  color: rgb(255, 110, 5);
-}
-
-#toggleMenu{
-  position: fixed;
-  top: 65px;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-  z-index: 2;
+  color: rgb(230, 20, 0);
 }
 
 /* Styles généraux ---------------------------------------*/
-
-.fade-enter-active{
-  animation: fade 0.7s;
-}
-
-.fade-leave-active {
-  animation: fade 0.7s reverse;
-}
-
-@keyframes fade {
-  0% {
-    opacity: 0;
-  }100% {
-    opacity: 1;
-  }
-}
-
 .corps{
   margin: 50px auto 0 auto;
   width: 80%;
 }
 
 .corps .case{
-  background-color:#494949;
+  background-color:#505050;
   margin: auto;
+  padding: 10px 0 10px 0;
   border-radius: 10px;
   width: 70%;
+  margin-top: 30px;
 }
+
+.corps .labelPubli{
+  color: white;
+  font-size: 25px;
+}
+
+.corps .labelComm{
+  color: white;
+  margin-bottom: 0;
+}
+
 
 @media screen and (max-width: 640px) {
   .corps {
@@ -241,11 +147,24 @@ header{
   }
 }
 
-.corps .case #uploadPublication{
-  background-color:#777777;
+.corps .case .uploadTitle{
+  background-color:#909090;
   padding: 10px;
-  width: 60%;
-  margin: 12px;
+  width: 90%;
+  margin: -10px 0 0 10px;
+  height: 20px;
+  border: none;
+  border-radius: 15px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  color: white;
+}
+
+.corps .case .uploadContent{
+  background-color:#909090;
+  padding: 10px;
+  width: 90%;
+  margin: 0 0 0 10px;
   height: 60px;
   border: none;
   border-radius: 15px;
@@ -254,27 +173,44 @@ header{
   color: white;
 }
 
-.casePublication .uploadComments{
-  background-color:#777777;
-  padding: 10px;
-  width: 70%;
-  margin: 12px;
-  height: 25px;
-  border: none;
-  border-radius: 15px;
+.case .inputPost{ 
+  background-color: rgb(230,20,0);
+  border-color: white;
+  border-radius: 5px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   color: white;
 }
 
+.case .inputComment{ 
+  margin-left: 75%;
+  border: none;
+  background-color: #909090;
+  border-radius: 5px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  color: #404040;
+}
+
+.case .uploadComment{
+  background-color:#909090;
+  padding: 10px;
+  width: 90%;
+  margin: 10px 0 0 10px;
+  height: 15px;
+  border: none;
+  border-radius: 15px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  color: white;
+}
 
 .case1Hr{
-  height: 1px;
+  height: 2px;
   background-color:#777777;
   border: none;
   width: 90%;
 }
-
 
 #preview{
   width: 100%;
@@ -302,11 +238,10 @@ header{
   text-align: center;
 }
 
-.boxComm{
-  margin: 25px;
-  padding: 2px;
-  background-color: rgb(0, 0, 0);
+.boxComments{
+  background-color: #808080;
   border-radius: 18px;
+  color: white;
 }
 
 .identiteComm{
@@ -314,57 +249,10 @@ header{
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
 }
-
-/* Style de la gallerie --------------------------------------------*/
-
-.containerGalery{
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.9);
-}
-
-.containerGalery img{
-  width: 20%!important;
-  overflow: auto;
-  margin: 7% auto;
-}
-
-@media screen and (max-width: 640px) {
-  .containerGalery img{
-  width: 70%!important;
-  }
-}
-
-.closebtn {
-  color: #ffffff;
-  float: right;
-  margin-right: 15px;
-  font-size: 50px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#imgtext {
-  position: absolute;
-  color: white;
-  left: 10%;
-  right: 10%;
-  font-size: 18px;
-  font-family: 'Open Sans', sans-serif;
-}
 </style>
 
 <script>
-import { FingerprintSpinner } from 'epic-spinners'
-
 export default {
-  components: {FingerprintSpinner},
   name:'App',
   data() {
     return {

@@ -4,6 +4,7 @@
     <transition appear name="fade" mode="out-in">
 
     <div class="box" v-if="fenetreSignUp == 0" key="connexion">
+    <img class="imgTitle" src='../assets/groupomania.png'/>
       <h2>Connexion</h2>
       <form name="ConnexionForm" onsubmit="return false;">
 
@@ -17,16 +18,18 @@
           <label>Mot de passe</label>
         </div>
 
-        <input type="submit" name="" value="Valider" @click="recuperationChampFormConnexion">
+        <input type="submit" value="Valider" @click="recuperationChampFormConnexion">
 
       </form>
 
-      <p class="formP">Pas encore inscrit ? Inscrivez vous en cliquant <span class="lienOrange" @click="changeFenetreSignUp">ici</span> !</p>
+      <p class="formLienAuth">Pas encore inscrit ? Inscrivez vous en cliquant <span class="lienRouge" @click="changeFenetreSignUp">ici</span> !</p>
       
     </div>
 
     <div class="box" v-else key="inscription">
+      <img class="imgTitle" src='../assets/groupomania.png'/>
       <h2>Inscription</h2>
+
       <form name="inscriptionForm" onsubmit="return false;">
 
         <div class="inputBox">
@@ -54,19 +57,15 @@
           <label>Mot de passe</label>
         </div>
 
-        <input type="submit" name="" value="Valider" @click="recuperationChampFormInscription">
+        <input type="submit" value="Valider" @click="recuperationChampFormInscription">
 
       </form>
 
-      <p class="formP">Déjà inscrit ? Connectez vous en cliquant <span class="lienOrange" @click="changeFenetreSignUp">ici</span> !</p>
+      <p class="formLienAuth">Déjà inscrit ? Connectez vous en cliquant <span class="lienRouge" @click="changeFenetreSignUp">ici</span> !</p>
       
     </div>
 
     </transition>
-
-    <router-link to="/admin" class="adminLink">
-      <span class="adminIcon"><i class="fa fa-user-cog"></i></span>
-    </router-link>
 
   </div>
 </template>
@@ -74,23 +73,29 @@
 <style scoped>
 
 body{
-  background-color: #fff;
+  background-color: #ffffff;
+}
+
+.imgTitle{
+  position: relative;
+  width:20%;
+  item-align: center;
+  margin: 15px;
+  padding-left: 115px;
 }
 
 .auth{
   width: 100%;
   height: 100vh;
-  margin: 0;
-  padding: 0;
+  margin:0;
+  padding:0;
   font-family: sans-serif;
-  background: url('../assets/groupomania.png');
-  background-repeat: no-repeat;
   background-position: center;
 }
 
 .box{
   position: absolute;
-  margin-top: 10px;
+  margin-top: 30px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -138,31 +143,12 @@ body{
   transition: .5s;
 }
 
-.box .inputBox .menuGenre{
-  transition: .5s;
-  padding: 10px 20px;
-  width: 100%;
-  background: transparent;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 1px solid #ffffff;
-  outline: none;
-  font-size: 16px;
-  color: #ffffff;
-}
-
-.box .inputBox input:focus ~ label, .box .inputBox .menuGenre:focus ~ label{
-  left: 0;
-  color: rgb(255, 106, 0);
-  font-size: 12px;
-}
-
 .box input[type="submit"]{
   background: transparent;
   border:none;
   outline:none;
   color: #000000;
-  background: rgb(255, 106, 0);
+  background: rgb(230, 20, 0);
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
@@ -173,48 +159,14 @@ body{
   opacity: 0.7;
 }
 
-.box .formP{
+.box .formLienAuth{
   color: #ffffff;
   font-size: 12px;
 }
 
-.box .formP .lienOrange{
-  color: rgb(255, 106, 0);
+.box .formLienAuth .lienRouge{
+  color: rgb(230, 20, 0);
   cursor: pointer;
-}
-
-.adminLink{
-  position: absolute;
-  text-decoration: none;
-  color: #fff;
-  font-size: 20px;
-  top: 10px;
-  left: 10px;
-  transition: .3s;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 10px;
-  border: #fff 2px solid;
-  border-radius: 50%;
-}
-
-.adminLink:hover{
-  color: rgb(255, 106, 0);
-}
-
-.fade-enter-active{
-  animation: fade 0.7s;
-}
-
-.fade-leave-active {
-  animation: fade 0.7s reverse;
-}
-
-@keyframes fade {
-  0% {
-    opacity: 0;
-  }100% {
-    opacity: 1;
-  }
 }
 
 </style>
@@ -242,11 +194,20 @@ export default {
       nomValide: false,
       prenomValide: false,
       emailValide: false,
+      pseudoValide: true,
       passwordValide: false,
 
       sendInscription: {},
       sendConnexion: {},
     }
+  },
+
+  beforeMount(){ // Reset des variables dans le store
+    this.$store.commit('MUTATION_CONNEXION', false);
+    this.$store.commit('MUTATION_CONNEXION_ADMIN', false);
+    this.$store.commit('MUTATION_USERID', null);
+    this.$store.commit('MUTATION_TOKEN', null);
+    document.getElementById("conteneur").style.marginLeft = "0";
   },
 
   methods: {
@@ -273,12 +234,7 @@ export default {
         }
       }
 
-      if (!this.authConnexion) {
-        document.getElementById("authConnexion").setAttribute("required", "");
-      }
-      if (!this.passwordConnexion) {
-        document.getElementById("passwordConnexion").setAttribute("required", "");
-      }
+    
 
       if(this.emailValideConnexion && this.passwordValideConnexion){
         this.sendConnexion = {email : this.authConnexion, password : this.passwordConnexion}
@@ -291,22 +247,29 @@ export default {
          if (/^([a-zA-Z]){2,15}$/.test(this.nom)) {
            this.nomValide = true;
          }else{
-           document.getElementById("nom").setCustomValidity("Champ invalide");
+           document.getElementById("nom").setCustomValidity("Champ nom invalide");
            this.nomValide = false;
          }
 
          if (/^([a-zA-Z]){2,15}$/.test(this.prenom)) {
            this.prenomValide = true;
          }else{
-           document.getElementById("prenom").setCustomValidity("Champ invalide");
+           document.getElementById("prenom").setCustomValidity("Champ prénom invalide");
            this.prenomValide = false;
          }
 
          if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
            this.emailValide = true;
          }else{
-           document.getElementById("email").setCustomValidity("Champ invalide");
+           document.getElementById("email").setCustomValidity("Champ email invalide");
            this.emailValide = false;
+         }
+
+         if (/^([a-zA-Z]){2,15}$/.test(this.pseudo)) {
+           this.pseudoValide = true;
+         }else{
+           document.getElementById("pseudo").setCustomValidity("Champ pseudo invalide");
+           this.pseudoValide = false;
          }
 
          if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(this.password)) {
@@ -318,6 +281,7 @@ export default {
          
          if(this.nomValide && this.prenomValide && this.emailValide && this.passwordValide){
            this.sendInscription = {nom : this.nom, prenom : this.prenom, email : this.email, pseudo : this.pseudo, password : this.password}
+           alert("Utilisateur créé !");
            this.envoiFormAuthentification(this.sendInscription, '/signup');
           }
          
@@ -348,7 +312,8 @@ export default {
       })
       .then(response => {
         if (response.data.status =="userInconnu" || response.data.status =="passwordInvalide") {
-          alert(response.data.message);          
+          alert(response.data.message);
+          window.location.reload();         
         }else if(response.data.status == "OK"){
           alert(response.data.message);
           this.fenetreSignUp = 0;
@@ -359,8 +324,8 @@ export default {
           this.$store.commit('MUTATION_NOM', response.data.nom);
           this.$store.commit('MUTATION_PRENOM', response.data.prenom);
           this.$router.push({ name: 'Home' });
-
           console.log(this.$store.state.userId +": "+ this.$store.state.token)
+
         }else{
           throw new Error("Valeurs non reconnues");
         }

@@ -3,12 +3,12 @@ const fs = require('fs');
 const bdd = require('../mysqlConfig');
 
 exports.createComment = (req, res, next) => {
-    let parameters = [req.body.Posts_idPosts, req.body.Posts_Utilisateurs_id, req.body.Utilisateurs_id, req.body.contents];
-    bdd.query ('INSERT INTO Comments (Posts_idPosts, Posts_Utilisateurs_id, Utilisateurs_id, contents) VALUES(?, ?, ?, ?)', parameters, (err, res) => {
+    let parameters = [req.body.idPosts, req.body.Utilisateurs_id, req.body.Utilisateur_id, req.body.contents];
+    bdd.query ('INSERT INTO Comments (Posts_idPosts, Posts_Utilisateurs_id, id, contents) VALUES(?, ?, ?, ?)', parameters, (err, resPostComment) => {
         if (err) throw err;
       
     console.log ('Données reçues de Db:');
-    console.log (res);
+    console.log (resPostComment);
     });
 }
 
@@ -33,10 +33,20 @@ exports.deleteComment = (req, res, next) => {
 }
 
 exports.getAllComments = (req, res, next) => {
-    bdd.query ('SELECT * FROM Comments ORDER BY Utilisateurs_id', (err, res) => {
+    bdd.query ('SELECT * FROM Comments', (err, res) => {
         if (err) throw err;
       
       console.log ('Données reçues de Db:');
       console.log (res);
+      });
+}
+
+exports.getAllCommentsByPost = (req, res, next) => {
+    let parameters = [req.params.Posts_idPosts]
+    bdd.query ('SELECT * FROM Comments WHERE Posts_idPosts = ? ORDER BY idComments DESC', parameters, (err, resCommentByPost) => {
+        if (err) throw err;
+      
+      console.log ('Données reçues de Db:');
+      console.log (resCommentByPost);
       });
 }

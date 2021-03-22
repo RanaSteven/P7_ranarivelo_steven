@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Admin from '../views/AdminSignUp.vue'
 import Auth from '../views/Auth.vue'
+import Profile from '../views/Profile.vue'
 import Settings from '../views/Settings.vue'
 
 const routes = [
@@ -20,14 +20,14 @@ const routes = [
     component: Home
   },
   {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
+  {
     path: '/settings',
     name: 'Settings',
     component: Settings
-  },
-  {
-    path: '/admin',
-    name: 'admin',
-    component: Admin
   },
 ]
 
