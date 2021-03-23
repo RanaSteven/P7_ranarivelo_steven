@@ -20,8 +20,8 @@ exports.getProfile = (req, res, next) => {
 exports.modifyPassword = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
   .then(hash => {
-    let parameters = [hash];
-    bdd.query ('UPDATE Utilisateurs SET password = ?', parameters, (err, resPassword) => { 
+    let parameters = [hash, req.params.id];
+    bdd.query ('UPDATE Utilisateurs SET password = ? WHERE id = ?', parameters, (err, resPassword) => { 
       if(err){
         res.status(500).json({err});
         console.log(err)
@@ -35,7 +35,7 @@ exports.modifyPassword = (req, res, next) => {
 }
 
 exports.modifyProfile = (req, res, next) => { // Modifier les données d'un utilisateurs selon le critère souhaité
-    let parameters = [req.body.prenom, req.body.nom, req.body.pseudo, req.body.id];
+    let parameters = [req.body.prenom, req.body.nom, req.body.pseudo, req.params.id];
     bdd.query("UPDATE Utilisateurs SET prenom = ?, nom = ?, pseudo = ? WHERE id= ?", parameters, (err, res) => {
       if(err) throw err;
       console.log(res);

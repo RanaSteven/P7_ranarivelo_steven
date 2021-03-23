@@ -256,11 +256,10 @@ export default {
     envoiModifProfil(){
       if (this.prenom != "" && this.nom != "" && this.pseudo != ""){
         axios
-        .put("http://localhost:3000/user/modify/"  + this.$store.state.userId, {
+        .put("http://localhost:3000/user/modifyProfile/" + this.$store.state.userId, {
           prenom: this.prenom,
           nom: this.nom,
           pseudo: this.pseudo,
-          id: this.$store.state.userId
         },
         {  
           headers: {
@@ -284,7 +283,10 @@ export default {
     envoiModifPassword(){ // Envoi des modifications du mdp via une requete PUT
 
       axios
-      .put("http://localhost:3000/user/modifyPassword", {
+      .put("http://localhost:3000/user/modifyPassword/" + this.$store.state.userId, {
+        password: this.password,
+      },
+      {
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token,
           "Content-Type": "application/json",

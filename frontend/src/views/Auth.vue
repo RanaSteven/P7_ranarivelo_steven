@@ -1,4 +1,9 @@
 <template>
+  <div class="admin">
+    <router-link to="/admin">
+      <span class="adminLien">Administrateur</span>
+    </router-link>
+  </div>
   <div class="auth">
 
     <transition appear name="fade" mode="out-in">
@@ -23,8 +28,9 @@
       </form>
 
       <p class="formLienAuth">Pas encore inscrit ? Inscrivez vous en cliquant <span class="lienRouge" @click="changeFenetreSignUp">ici</span> !</p>
-      
+
     </div>
+    
 
     <div class="box" v-else key="inscription">
       <img class="imgTitle" src='../assets/groupomania.png'/>
@@ -82,6 +88,21 @@ body{
   item-align: center;
   margin: 15px;
   padding-left: 115px;
+}
+
+.admin{
+    margin-left: 10px;
+    margin-top: 40px;
+    text-align: center;
+    text-decoration: none;   
+}
+
+.adminLien{
+  background-color: #000000;
+  text-decoration: none;
+  Padding: 10px;
+  border-radius: 5px;
+  color: white;
 }
 
 .auth{

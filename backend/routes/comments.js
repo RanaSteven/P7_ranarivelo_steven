@@ -5,10 +5,10 @@ const multer = require('../middleware/multer-config');
 const router = express.Router();
 const commentsControllers = require('../controllers/comments');
 
-router.get('/', commentsControllers.getAllComments);
-router.get('/commentsByPost', commentsControllers.getAllCommentsByPost);
-router.post('/createComment', commentsControllers.createComment);
+router.post('/createComment', auth, commentsControllers.createComment);
+router.get('/', auth, commentsControllers.getAllComments);
+router.get('/commentsByPost', auth, commentsControllers.getAllCommentsByPost);
 router.put('/modify/:id', auth, commentsControllers.modifyComment);
-router.delete('/delete/:id', commentsControllers.deleteComment);
+router.delete('/delete/:id', auth, commentsControllers.deleteComment);
 
 module.exports = router;

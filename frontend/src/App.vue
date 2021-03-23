@@ -34,6 +34,31 @@
         </li>
       </ul>
     </div>
+
+    <div id="nav" v-if="$store.state.connexionAdmin == true">
+      <ul>
+        <li>
+          <router-link to="/admin/panel/publications_en_attente" class="enAttente">
+            <span class="title">Publications (en attente)</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/admin/panel/commentaires_en_attente" class="enAttente">
+            <span class="title">Commentaires (en attente)</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/admin/panel/users">
+            <span class="title">Utilisateurs</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/auth">
+            <span class="title">Déconnexion</span>
+          </router-link>
+        </li>
+      </ul>
+    </div>
   </header>
 
   <div id="conteneur">
