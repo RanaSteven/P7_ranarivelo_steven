@@ -2,22 +2,26 @@
   <div class="corps">
     <div class="case">
       <textarea class="uploadContent" v-model="contentPublication" placeholder="Que voulez-vous dire ?"></textarea>
+      <input type="file" id="uploadImg" name="uploadImg" accept="image/png, image/jpeg">
+      <div id="preview"></div>
+      <div class="marginInput">
       <input type="submit" class="inputPost" value="Publier" @click="envoiPost">
+      </div>
     </div>
     <h1>{{ sousTitre }}</h1>
     <div class="case" v-for="publication in publications" :key="publication">
       
-      <router-link to="/comments">
         <p class="labelPubli">{{ publication.content}}</p>
-      </router-link>
       
       <p class="labelComm">commentaires :</p>
       <div class="boxComments">
       <p>{{ publication.comment1 }}</p>
       <p>{{ publication.comment2 }}</p>
       </div>
-      <textarea class="uploadComment" v-model="contentComment" placeholder="Commentaire"></textarea>
-      <input type="submit" class="inputComment" value="Commenter" @click="envoiComment">
+      <textarea class="uploadComments" v-model="contentComment" placeholder="Commentaire"></textarea>
+      <div class="marginInput">
+      <input class="inputComment" type="submit" value="Commenter" @click="envoiComment(publication.idPosts, publication.Utilisateurs_id)">
+      </div>    
     </div>
   </div>
 </template>
@@ -32,7 +36,10 @@ export default {
 			sousTitre: "Fil d'actualité",
       contentPublication: "",
       contentComment: "",
-      content: null,
+      PostId: null,
+      UtilisateurId: null,
+      Id: null,
+
     }
   },
   beforeMount() {
@@ -53,7 +60,7 @@ export default {
       })
       .then(response => {
         this.publications = response.data.elements;
-        console.log(response.data.elements);
+        console.log(response.data);
       },
       console.log("Requête envoyée !"),)
       .catch(function (error) {
@@ -65,9 +72,15 @@ export default {
   methods:{
     envoiPost() {
       if (this.contentPublication != ""){
-        axios.post('http://localhost:3000/post/createPost', {
+
+        let input = document.getElementById("uploadImg");
+        let file = input.files;
+        console.log(file);
+
+        axios.post('http://localhost:3000/post/createPost',{
+            Utilisateurs_id: this.$store.state.userId,
             content: this.contentPublication,
-            Utilisateurs_id: this.$store.state.userId
+            urls_images: file,
         },
         {
           headers: {
@@ -88,12 +101,16 @@ export default {
       }
     },
 
-    envoiComment() {
+    envoiComment(postId, utilisateurId) {
+      this.PostId = postId;
+      this.UtilisateurId = utilisateurId;
       if (this.contentComment != ""){
-
-        axios.post('http://localhost:3000/comment/createComment', {
-            contents: this.contentComment,
+        axios.post('http://localhost:3000/comment/createComment/'+ this.PostId +'/'+ this.UtilisateurId +'/'+ this.$store.state.userId, {
+            Posts_idPosts: this.PostId,
+            Posts_Utilisateurs_id: this.UtilisateurId,
             Utilisateurs_id: this.$store.state.userId,
+            contents: this.contentComment,
+            status_moderation: 0,
         },
         {
           headers: {

@@ -19,4 +19,5 @@ const storage = multer.diskStorage({
 });
 
 // Exportation du middleware multer
-module.exports = multer({ storage: storage }).single('image');
+//module.exports = multer({ storage: storage }).single('image');
+module.exports = multer({storage: storage}).array('image',10);

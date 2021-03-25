@@ -2,14 +2,33 @@ const mysql = require('mysql');
 const fs = require('fs');
 const bdd = require('../mysqlConfig');
 
-exports.createComment = (req, res, next) => {
-    let parameters = [req.body.idPosts, req.body.Utilisateurs_id, req.body.Utilisateur_id, req.body.contents];
-    bdd.query ('INSERT INTO Comments (Posts_idPosts, Posts_Utilisateurs_id, id, contents) VALUES(?, ?, ?, ?)', parameters, (err, resPostComment) => {
-        if (err) throw err;
-      
-    console.log ('Données reçues de Db:');
-    console.log (resPostComment);
-    });
+exports.getAllComments = (req, res, next) => {
+  bdd.query ('SELECT * FROM Comments WHERE status_moderation= 0 ORDER BY idComments DESC', (err, resAllComm) => {
+      if(err){
+          res.status(500).json({err});
+          console.log(err)
+      }else{
+          res.status(200).json(resAllComm);
+      }
+  })
+}
+
+exports.createComment = (req, res, next) => { // Ajouter un commentaire a une publication
+  let newComment = {
+    Posts_idPosts: req.params.idPosts,
+    Posts_Utilisateurs_id: req.params.Posts_Utilisateurs_id,
+    Utilisateurs_id: req.params.id,
+    contents: req.body.contents,
+    status_moderation: 0,
+  }
+  bdd.query ('INSERT INTO comments SET?', newComment, function(err, results){
+    if(err){
+      res.status(500).json({err});
+    }else{
+      res.status(200);
+      console.log('Commentaire envoyé')
+    }
+  })
 }
 
 exports.modifyComment = (req, res, next) => {
@@ -29,24 +48,5 @@ exports.deleteComment = (req, res, next) => {
       
       console.log ('Données reçues de Db:');
       console.log (res);
-      });
-}
-
-exports.getAllComments = (req, res, next) => {
-    bdd.query ('SELECT * FROM Comments', (err, res) => {
-        if (err) throw err;
-      
-      console.log ('Données reçues de Db:');
-      console.log (res);
-      });
-}
-
-exports.getAllCommentsByPost = (req, res, next) => {
-    let parameters = [req.params.Posts_idPosts]
-    bdd.query ('SELECT * FROM Comments WHERE Posts_idPosts = ? ORDER BY idComments DESC', parameters, (err, resCommentByPost) => {
-        if (err) throw err;
-      
-      console.log ('Données reçues de Db:');
-      console.log (resCommentByPost);
       });
 }

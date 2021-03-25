@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Auth from '../views/Auth.vue'
 import Home from '../views/Home.vue'
-import Comments from '../views/Comments.vue'
 import Profile from '../views/Profile.vue'
 import Settings from '../views/Settings.vue'
 
@@ -26,14 +25,14 @@ const routes = [
     component: () => import('../views/AdminHome.vue')
   },
   {
+    path: '/adminComments',
+    name: 'AdminComments',
+    component: () => import('../views/AdminComments.vue')
+  },
+  {
     path: '/home',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/comments',
-    name: 'Comments',
-    component: Comments
   },
   {
     path: '/profile',

@@ -1,5 +1,5 @@
 <template>
-  <div class="admin">
+  <div v-if="fenetreSignUp == 0" class="admin">
     <router-link to="/admin">
       <span class="adminLien">Administrateur</span>
     </router-link>
@@ -23,7 +23,9 @@
           <label>Mot de passe</label>
         </div>
 
-        <input type="submit" value="Valider" @click="recuperationChampFormConnexion">
+        <div class="marginInput">
+          <input type="submit" value="Valider" @click="recuperationChampFormConnexion">
+        </div>
 
       </form>
 
@@ -63,8 +65,10 @@
           <label>Mot de passe</label>
         </div>
 
-        <input type="submit" value="Valider" @click="recuperationChampFormInscription">
-
+        <div class="marginInput">
+          <input type="submit" value="Valider" @click="recuperationChampFormInscription">
+        </div>
+         
       </form>
 
       <p class="formLienAuth">Déjà inscrit ? Connectez vous en cliquant <span class="lienRouge" @click="changeFenetreSignUp">ici</span> !</p>

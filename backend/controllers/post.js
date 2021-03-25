@@ -5,12 +5,12 @@ const fs = require('fs');
 
 exports.getAllPosts = (req, res, next) => {
   let response;
-  bdd.query ('SELECT * FROM Posts ORDER BY idPosts DESC', (err, resAllPosts) => {
+  bdd.query ('SELECT * FROM Posts WHERE status_moderation= 1 ORDER BY idPosts DESC', (err, resAllPosts) => {
     if (err){
       throw err;
     }
     else{
-      bdd.query ('SELECT * FROM Comments', (err, resAllComments) => {
+      bdd.query ('SELECT * FROM Comments WHERE status_moderation = 1 ORDER BY idComments DESC', (err, resAllComments) => {
       let elements= [];
     resAllPosts.forEach(post => {
       post.comment1 = null;
@@ -35,34 +35,6 @@ exports.getAllPosts = (req, res, next) => {
   });
 }
 
-exports.getAdminAllPosts = (req, res, next) => {
-  let response;
-  bdd.query ('SELECT * FROM Posts WHERE status_moderation = 0 ORDER BY idPosts DESC', (err, resAdminAllPosts) => {
-    if (err){
-      throw err;
-    }
-    else{
-      response = resAdminAllPosts
-      res.status(200).json(response);
-    }
-  });
-}
-
-exports.validePost = (req, res, next) => {
-  let response;
-  let parameters = [req.body.idPosts];
-  bdd.query ('UPDATE Posts SET status_moderation = 1 WHERE idPosts = ?', parameters, (err, res) => {
-    if (err) {
-      throw err;
-    }
-    else{
-      response = res;
-      res.status(200).json(response);
-      console.log(res);
-    }
-  });
-}
-
 exports.getAllIdPosts = (req, res, next) => {
   let response;
   let parameters = [req.params.id];
@@ -77,30 +49,33 @@ exports.getAllIdPosts = (req, res, next) => {
   });
 }
 
-exports.getOnePostId = (req, res, next) => {
-  let response;
-  let parameters = [req.body.idPosts];
-  bdd.query ('SELECT * FROM Posts WHERE idPosts = ?', parameters, (err, res) => {
-    if (err){
-      throw err;
+exports.createPost = (req, res, next) => { // Création d'un post
+  const newPost = {
+    content: req.body.content,
+    Utilisateurs_id: req.body.Utilisateurs_id,
+    status_moderation: 0,
+  }
+  console.log(newPost);
+  bdd.query ('INSERT INTO posts SET?', newPost, (err, results) => {
+    if(err){
+      res.status(500).json({err});
+      console.log(err)
+    }else{
+      res.status(200);
     }
-    else{
-      response = res;
-      res.status(200).json(response);
-    }
-  });
+  })
 }
 
-exports.createPost = (req, res, next) => {
-    let parameters = [req.body.content, req.body.Utilisateurs_id];
-    bdd.query ('INSERT INTO Posts (content, Utilisateurs_id, status_moderation) VALUES(?, ?, 0)', parameters, (err, res) => {
-        if (err) throw err;
+// exports.createPost = (req, res, next) => {
+//     let parameters = [req.body.content, req.body.Utilisateurs_id];
+//     bdd.query ('INSERT INTO Posts (content, Utilisateurs_id, status_moderation) VALUES(?, ?, 0)', parameters, (err, res) => {
+//         if (err) throw err;
       
-    console.log ('Données reçues de Db:');
-    console.log (res);
-    console.log('publication envoyée !')
-    });
-}
+//     console.log ('Données reçues de Db:');
+//     console.log (res);
+//     console.log('publication envoyée !')
+//     });
+// }
 
 exports.modifyPost = (req, res, next) => {
     let parameters = [req.body.content, req.body.idPosts];

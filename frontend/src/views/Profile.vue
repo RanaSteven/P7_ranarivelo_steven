@@ -67,8 +67,6 @@ beforeMount() {
         console.log(error);
         console.log('erreur');
       });
-
-
   },
 }
 </script>

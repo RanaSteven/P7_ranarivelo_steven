@@ -37,19 +37,14 @@
 
     <div id="nav" v-if="$store.state.connexionAdmin == true">
       <ul>
-        <li>
-          <router-link to="/admin/panel/publications_en_attente" class="enAttente">
+       <li>
+          <router-link to="/adminHome" class="enAttente">
             <span class="title">Publications (en attente)</span>
           </router-link>
         </li>
         <li>
-          <router-link to="/admin/panel/commentaires_en_attente" class="enAttente">
+          <router-link to="/adminComments" class="enAttente">
             <span class="title">Commentaires (en attente)</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/admin/panel/users">
-            <span class="title">Utilisateurs</span>
           </router-link>
         </li>
         <li>
@@ -108,6 +103,7 @@ header{
 
 #nav ul li a{
   color: #ffffff;
+  text-decoration: none;
 }
 
 #nav ul li a .iconLogo img{
@@ -130,6 +126,7 @@ header{
   position: relative;
   font-size: 30px;
   white-space: nowrap;
+  color: rgb(230,20,0);
 }
 
 #nav a.router-link-exact-active{
@@ -158,31 +155,45 @@ header{
 
 .corps .labelComm{
   color: white;
-  margin-bottom: 0;
+  margin: 15px;
+  text-decoration: underline;
 }
 
+.boxComments{
+  border: none;
+  background-color: #909090;
+  border-radius: 5px;
+  margin: 10px;
+}
 
 @media screen and (max-width: 640px) {
   .corps {
     width:100%;
   }
 
+  #nav ul li a .title{
+    position: relative;
+    padding: 0 10px;
+    height: 30px;
+    line-height: 60px;
+    text-align: start;
+    white-space: nowrap;
+    font-size: 12px;
+  }
+
+  #nav ul li a .titleLogo{
+    display: none;
+  }
+
+  #nav ul li a .iconLogo img{
+    width: 25px;
+    margin-top: 20px;
+    margin-right: 5px;
+  }
+
   .corps .case{
     width:90%;
   }
-}
-
-.corps .case .uploadTitle{
-  background-color:#909090;
-  padding: 10px;
-  width: 90%;
-  margin: -10px 0 0 10px;
-  height: 20px;
-  border: none;
-  border-radius: 15px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
-  color: white;
 }
 
 .corps .case .uploadContent{
@@ -198,16 +209,61 @@ header{
   color: white;
 }
 
-.case .inputPost{ 
-  background-color: rgb(230,20,0);
-  border-color: white;
+.inputValidePost{ 
+  background-color: rgb(0,200,80);
+  border: none;
+  padding: 5px;
+  margin: 0 auto 0;
   border-radius: 5px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
+  font-size: 15px;
   color: white;
 }
 
-.case .inputComment{ 
+.inputPost, .inputComment{ 
+  background-color: rgb(230,20,0);
+  border: none;
+  padding: 5px;
+  margin: 0 auto 0;
+  border-radius: 5px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: white;
+}
+
+.marginInput{
+  text-align: center;
+}
+
+.btnUploadImg{
+  width: 20%;
+  transition: .2s;
+  padding: 5px;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: white;
+  margin: 5px auto 0;
+  border-radius: 7px;
+  cursor:pointer;
+  background-color: #404040;
+}
+
+#preview{
+  width: 100%;
+  text-align: center;
+}
+
+#preview img{
+  width: 20%;
+  vertical-align: middle;
+  margin: 10px;
+  border: 5px white solid;
+  box-shadow: black 5px 5px 5px;
+}
+
+
+.case .uploadComments{ 
   margin-left: 75%;
   border: none;
   background-color: #909090;
@@ -217,7 +273,7 @@ header{
   color: #404040;
 }
 
-.case .uploadComment{
+.case .uploadComments{
   background-color:#909090;
   padding: 10px;
   width: 90%;
@@ -255,25 +311,6 @@ header{
   margin-right: 15px;
 }
 
-.casePublication .datePublication{
-  font-size: 13px;
-}
-
-.conteneurVFor{
-  text-align: center;
-}
-
-.boxComments{
-  background-color: #808080;
-  border-radius: 18px;
-  color: white;
-}
-
-.identiteComm{
-  font-size: 14px;
-  font-weight: bold;
-  font-family: 'Poppins', sans-serif;
-}
 </style>
 
 <script>
