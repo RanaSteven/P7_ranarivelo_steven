@@ -9,18 +9,18 @@
     <transition appear name="fade" mode="out-in">
 
     <div class="box" v-if="fenetreSignUp == 0" key="connexion">
-    <img class="imgTitle" src='../assets/groupomania.png'/>
+    <img name="logo_groupomania" alt="Logo" class="imgTitle" src='../assets/groupomania.png'/>
       <h2>Connexion</h2>
       <form name="ConnexionForm" onsubmit="return false;">
 
         <div class="inputBox">
           <input type="email" v-model="authConnexion" id="authConnexion">
-          <label>Email</label>
+          <label for="email">Email</label>
         </div>
 
         <div class="inputBox">
           <input type="password" v-model="passwordConnexion" id="passwordConnexion">
-          <label>Mot de passe</label>
+          <label for="password">Mot de passe</label>
         </div>
 
         <div class="marginInput">
@@ -68,7 +68,7 @@
         <div class="marginInput">
           <input type="submit" value="Valider" @click="recuperationChampFormInscription">
         </div>
-         
+
       </form>
 
       <p class="formLienAuth">Déjà inscrit ? Connectez vous en cliquant <span class="lienRouge" @click="changeFenetreSignUp">ici</span> !</p>
@@ -95,10 +95,10 @@ body{
 }
 
 .admin{
-    margin-left: 10px;
-    margin-top: 40px;
-    text-align: center;
-    text-decoration: none;   
+  margin-left: 10px;
+  margin-top: 40px;
+  text-align: center;
+  text-decoration: none;   
 }
 
 .adminLien{
@@ -349,7 +349,6 @@ export default {
           this.$store.commit('MUTATION_NOM', response.data.nom);
           this.$store.commit('MUTATION_PRENOM', response.data.prenom);
           this.$router.push({ name: 'Home' });
-          console.log(this.$store.state.userId +": "+ this.$store.state.token)
 
         }else{
           throw new Error("Valeurs non reconnues");

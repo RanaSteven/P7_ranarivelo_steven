@@ -4,7 +4,7 @@
       <ul>
         <li>
           <a href="#Home">
-            <span class="iconLogo"><img src="./assets/logo.png" alt=""></span>
+            <span class="iconLogo"><img src="./assets/icon.png" alt=""></span>
             <span class="titleLogo">Groupomania</span>
           </a>
         </li>
@@ -107,8 +107,8 @@ header{
 }
 
 #nav ul li a .iconLogo img{
-  width: 30px;
-  margin-left: -20px;
+  width: 40px;
+  margin-left: -30px;
   margin-right: 5px;
 }
 
@@ -126,11 +126,11 @@ header{
   position: relative;
   font-size: 30px;
   white-space: nowrap;
-  color: rgb(230,20,0);
+  color: rgb(250,20,0);
 }
 
 #nav a.router-link-exact-active{
-  color: rgb(230, 20, 0);
+  color: rgb(250, 20, 0);
 }
 
 /* Styles généraux ---------------------------------------*/
@@ -144,7 +144,7 @@ header{
   margin: auto;
   padding: 10px 0 10px 0;
   border-radius: 10px;
-  width: 70%;
+  width: 80%;
   margin-top: 30px;
 }
 
@@ -153,10 +153,15 @@ header{
   font-size: 25px;
 }
 
-.corps .labelComm{
+.labelComm{
   color: white;
   margin: 15px;
   text-decoration: underline;
+}
+
+.corps .adminLabelComm{
+  color: white;
+  margin: 15px;
 }
 
 .boxComments{
@@ -164,6 +169,16 @@ header{
   background-color: #909090;
   border-radius: 5px;
   margin: 10px;
+}
+
+.conteneurImg{
+  display: inline-block;
+  width: 90%;
+  margin: 20px;
+}
+
+.conteneurImg img{
+  width: 100%;
 }
 
 @media screen and (max-width: 640px) {
@@ -210,7 +225,7 @@ header{
 }
 
 .inputValidePost{ 
-  background-color: rgb(0,200,80);
+  background-color: rgb(0,120,20);
   border: none;
   padding: 5px;
   margin: 0 auto 0;
@@ -221,7 +236,7 @@ header{
 }
 
 .inputPost, .inputComment{ 
-  background-color: rgb(230,20,0);
+  background-color: rgb(250,20,0);
   border: none;
   padding: 5px;
   margin: 0 auto 0;
@@ -235,52 +250,14 @@ header{
   text-align: center;
 }
 
-.btnUploadImg{
-  width: 20%;
-  transition: .2s;
-  padding: 5px;
-  text-align: center;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 15px;
-  color: white;
-  margin: 5px auto 0;
-  border-radius: 7px;
-  cursor:pointer;
-  background-color: #404040;
-}
-
-#preview{
-  width: 100%;
-  text-align: center;
-}
-
-#preview img{
-  width: 20%;
-  vertical-align: middle;
-  margin: 10px;
-  border: 5px white solid;
-  box-shadow: black 5px 5px 5px;
-}
-
-
 .case .uploadComments{ 
-  margin-left: 75%;
   border: none;
-  background-color: #909090;
-  border-radius: 5px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  color: #404040;
-}
-
-.case .uploadComments{
-  background-color:#909090;
   padding: 10px;
   width: 90%;
   margin: 10px 0 0 10px;
   height: 15px;
-  border: none;
-  border-radius: 15px;
+  background-color: #909090;
+  border-radius: 5px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   color: white;

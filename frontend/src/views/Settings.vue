@@ -1,15 +1,15 @@
 <template>
-  <div class="menuList">
-    <ul class="menuSettings">
-      <li class="onglet" id="changeProfile" @click="changeFenetreModif">Informations générales | Mot de passe/Supprimer compte</li>
-    </ul>
-  </div>
+    <div class="menuList">
+      <ul class="menuSettings">
+        <li class="onglet" id="changeProfile" @click="changeFenetreModif">Informations générales | Mot de passe/Supprimer compte</li>
+      </ul>
+    </div>
 
     <div class="box" v-if="fenetreModif == 0" key="modifProfil">
       <h2>Informations générales</h2>
       <form name="modifProfilForm">
         <div class="inputBox">
-          <input type="text" v-model="prenom" id="prenom"> Steven
+          <input type="text" v-model="prenom" id="prenom">
           <label>Prénom</label>
         </div>
         <div class="inputBox">
@@ -188,6 +188,7 @@ export default {
       sendModifPassword: {},
     }
   },
+
   beforeMount() {
     if(this.$store.state.connexion == true){
       document.getElementById("conteneur").style.margin = "auto";
@@ -200,12 +201,12 @@ export default {
     changeFenetreModif(){ // Switcher de formulaire de modification
       if (this.fenetreModif == 0) {
         this.fenetreModif = 1;
-
-      } else {
+      }else{
         this.fenetreModif = 0;
       }
     },
-    recuperationModifProfilForm(){ // On récupère les informations du profil et on vérifie qu'elles sont conformes
+
+    recuperationModifProfilForm() { // On récupère les informations du profil et on vérifie qu'elles sont conformes
       if (this.nom && this.prenom && this.pseudo) {
 
         if (/^([a-zA-Z]){2,15}$/.test(this.prenom)) {
@@ -236,7 +237,7 @@ export default {
       }
     },
 
-    recuperationModifPasswordForm(){ // On récupère le nouveau mdp et on vérifie qu'il soit conforme
+    recuperationModifPasswordForm() { // On récupère le nouveau mdp et on vérifie qu'il soit conforme
       if (this.password) {
         if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(this.password)) {
            this.passwordValide = true;
@@ -253,10 +254,9 @@ export default {
       }
     },
 
-    envoiModifProfil(){
+    envoiModifProfil() {
       if (this.prenom != "" && this.nom != "" && this.pseudo != ""){
-        axios
-        .put("http://localhost:3000/user/modifyProfile/" + this.$store.state.userId, {
+        axios.put("http://localhost:3000/user/modifyProfile/" + this.$store.state.userId, {
           prenom: this.prenom,
           nom: this.nom,
           pseudo: this.pseudo,
@@ -280,10 +280,9 @@ export default {
       }
     },
 
-    envoiModifPassword(){ // Envoi des modifications du mdp via une requete PUT
+    envoiModifPassword() { // Envoi des modifications du mdp via une requete PUT
 
-      axios
-      .put("http://localhost:3000/user/modifyPassword/" + this.$store.state.userId, {
+      axios.put("http://localhost:3000/user/modifyPassword/" + this.$store.state.userId, {
         password: this.password,
       },
       {
@@ -302,10 +301,8 @@ export default {
     },
 
 
-    deleteUser(){ // Supression d'un utilisateur via une requete DELETE
-      console.log(this.$store.state.userId)
-      axios
-      .delete('http://localhost:3000/user/delete/' + this.$store.state.userId, {
+    deleteUser() { // Supression d'un utilisateur via une requete DELETE
+      axios.delete('http://localhost:3000/user/delete/' + this.$store.state.userId, {
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token,
           "Content-Type": "application/json",
@@ -319,7 +316,6 @@ export default {
         console.log(error);
       });
     },
-  },
-  
+  },  
 }
 </script>

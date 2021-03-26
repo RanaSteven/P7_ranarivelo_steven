@@ -2,6 +2,7 @@ const mysql = require('mysql');
 const bdd = require('../mysqlConfig');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
+const { send } = require('process');
 
 exports.getAllPosts = (req, res, next) => {
   let response;
@@ -50,10 +51,12 @@ exports.getAllIdPosts = (req, res, next) => {
 }
 
 exports.createPost = (req, res, next) => { // Création d'un post
+let urlsImg = req.files.map(file => `${req.protocol}://${req.get('host')}/images/${file.filename}`);
   const newPost = {
     content: req.body.content,
     Utilisateurs_id: req.body.Utilisateurs_id,
     status_moderation: 0,
+    urls_images: JSON.stringify(urlsImg),
   }
   console.log(newPost);
   bdd.query ('INSERT INTO posts SET?', newPost, (err, results) => {

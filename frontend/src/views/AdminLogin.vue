@@ -1,28 +1,28 @@
 <template>
-<div class="admin">
+  <div class="admin">
     <router-link to="/auth">
       <span class="adminLien">Utilisateur</span>
     </router-link>
-</div>
+  </div>
 
-<div class="auth">
-  <div class="box">
-    <img class="imgTitle" src='../assets/groupomania.png'/>
+  <div class="auth">
+    <div class="box">
+      <img class="imgTitle" src='../assets/groupomania.png'/>
       <h2>Connexion Administrateur</h2>
       <form name="ConnexionForm" onsubmit="return false;">
 
-        <div class="inputBox">
-          <input type="email" v-model="email" id="email">
-          <label>Email</label>
-        </div>
+      <div class="inputBox">
+        <input type="email" v-model="email" id="email">
+        <label>Email</label>
+      </div>
 
-        <div class="inputBox">
-          <input type="password" v-model="password" id="password">
-          <label>Mot de passe</label>
-        </div>
+      <div class="inputBox">
+        <input type="password" v-model="password" id="password">
+        <label>Mot de passe</label>
+      </div>
 
-        <input type="submit" value="Valider" @click="submitAdmin">
-      </form>
+      <input type="submit" value="Valider" @click="submitAdmin">
+    </form>
     </div>
   </div>
 </template>
@@ -42,10 +42,10 @@ body{
 }
 
 .admin{
-    margin-left: 10px;
-    margin-top: 40px;
-    text-align: center;
-    text-decoration: none;   
+  margin-left: 10px;
+  margin-top: 40px;
+  text-align: center;
+  text-decoration: none;   
 }
 
 .adminLien{
@@ -157,12 +157,14 @@ export default {
       sendConnexion: {},
     }
   },
-  beforeMount(){ // Reset des variables dans le store
+
+  beforeMount() { // Reset des variables dans le store
     this.$store.commit('MUTATION_CONNEXION', false);
     this.$store.commit('MUTATION_CONNEXION_ADMIN', false);
     this.$store.commit('MUTATION_USERID', null);
     this.$store.commit('MUTATION_TOKEN', null);
   },
+
   methods: {
     submitAdmin(){ // Vérification des données du formulaire
       if (this.email && this.password){
@@ -193,10 +195,11 @@ export default {
       }
 
     },
+
     authAdmin(objetSend){ // Requète pour la connexion de l'admin
-      axios
-      .post('http://localhost:3000/auth/loginAdmin', objetSend, {
+      axios.post('http://localhost:3000/auth/loginAdmin', objetSend, {
         headers:{
+          'Authorization': 'Bearer ' + this.$store.state.token,
           "Content-Type": "application/json",
         }
       })

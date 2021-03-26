@@ -25,48 +25,43 @@ export default {
       profiles: null,
       publications: null,
       contentComment: "",
-        }
-    },
-beforeMount() {
+    }
+  },
+
+  beforeMount() {
     if(this.$store.state.connexion == true){
-      console.log(this.$store.state.token);
       document.getElementById("conteneur").style.marginTop ="100px";
     }else{
       this.$router.push({ name: 'Auth' });
     }
   },
-    mounted() { // Requete pour récupérer le profil
+  
+  mounted() { // Requete pour récupérer le profil
     axios.get('http://localhost:3000/user/' + this.$store.state.userId, {
-        headers: {
-          'Authorization': 'Bearer ' + this.$store.state.token,
-          "Content-Type": "application/json",
-        }
-      })
-      .then(responseUser => {
-        this.profiles = responseUser.data;
-        console.log(responseUser);
-      },
-      console.log("Requête envoyée !"),)
-      .catch(function (error) {
-        console.log(error);
-        console.log('erreur');
-      });
+      headers: {
+        'Authorization': 'Bearer ' + this.$store.state.token,
+        "Content-Type": "application/json",
+      }
+    })
+    .then(responseUser => {
+      this.profiles = responseUser.data;
+    },)
+    .catch(function (error) {
+      console.log(error);
+    });
     
     axios.get('http://localhost:3000/post/'+ this.$store.state.userId, {
-        headers: {
-          'Authorization': 'Bearer ' + this.$store.state.token,
-          "Content-Type": "application/json",
-        }
-      })
-      .then(response => {
-        this.publications = response.data;
-        console.log(response);
-      },
-      console.log("Requête envoyée !"),)
-      .catch(function (error) {
-        console.log(error);
-        console.log('erreur');
-      });
+      headers: {
+        'Authorization': 'Bearer ' + this.$store.state.token,
+        "Content-Type": "application/json",
+      }
+    })
+    .then(response => {
+      this.publications = response.data;
+    },)
+    .catch(function (error) {
+      console.log(error);
+    });
   },
 }
 </script>
@@ -88,5 +83,4 @@ h1, h2 {
   padding-left: 0;
   text-align: center;
 }
-
 </style>

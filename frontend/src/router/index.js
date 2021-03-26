@@ -15,21 +15,6 @@ const routes = [
     component: Auth
   },
   {
-    path: '/admin',
-    name: 'Admin',
-    component: () => import('../views/AdminLogin.vue')
-  },
-  {
-    path: '/adminHome',
-    name: 'AdminHome',
-    component: () => import('../views/AdminHome.vue')
-  },
-  {
-    path: '/adminComments',
-    name: 'AdminComments',
-    component: () => import('../views/AdminComments.vue')
-  },
-  {
     path: '/home',
     name: 'Home',
     component: Home
@@ -43,6 +28,21 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('../views/AdminLogin.vue')
+  },
+  {
+    path: '/adminHome',
+    name: 'AdminHome',
+    component: () => import('../views/AdminHome.vue')
+  },
+  {
+    path: '/adminComments',
+    name: 'AdminComments',
+    component: () => import('../views/AdminComments.vue')
   },
 ]
 
