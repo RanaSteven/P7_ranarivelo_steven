@@ -2,8 +2,14 @@
   <div class="corps">
     <h1>{{ sousTitre }}</h1>
     <div class="case" v-for="moderatePublication in moderatePublications" :key="moderatePublication">
-      <p class="labelPubli">{{ moderatePublication.content }}</p>
-      <input type="submit" class="inputValidePost" value="Valider la publication" @click="validePost(moderatePublication.idPosts)">
+      <div class="marginInput">
+        <p class="labelPubli">{{ moderatePublication.content }}</p>
+        <div class="conteneurImg" v-for="images in JSON.parse(moderatePublication.urls_images)" :key="images">
+          <img :src="images">
+        </div>
+        <input type="submit" class="inputValidePost" value="Valider la publication" @click="validePost(moderatePublication.idPosts)">
+        <input type="submit" class="inputUnvalidePost" value="Supprimer la publication" @click="deletePost(moderatePublication.idPosts)">
+      </div>
     </div>
   </div>
 </template>
@@ -61,6 +67,23 @@ export default {
       })
       .then(
         alert("Publication validée !"),
+        setTimeout(() => {  window.location.reload() }, 1000),
+      )
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+
+    deletePost(publicationId) {
+      this.idPublication = publicationId;
+      axios.delete('http://localhost:3000/admin/deletePost/' + this.idPublication, {
+        headers:{
+          'Authorization': 'Bearer ' + this.$store.state.token,
+          "Content-Type": "application/json",
+        }
+      })
+      .then(
+        alert("Publication supprimée !"),
         setTimeout(() => {  window.location.reload() }, 1000),
       )
       .catch(function (error) {

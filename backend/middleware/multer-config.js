@@ -3,7 +3,8 @@ const multer = require('multer'); // Importation du package multer
 const MIME_TYPES = {
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
-    'image/png': 'png'
+    'image/png': 'png',
+    'image/gif': 'gif'    
 };
 
 // Objet permettant d'indiquer où et comment enregistrer les fichiers entrants

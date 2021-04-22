@@ -69,17 +69,6 @@ let urlsImg = req.files.map(file => `${req.protocol}://${req.get('host')}/images
   })
 }
 
-// exports.createPost = (req, res, next) => {
-//     let parameters = [req.body.content, req.body.Utilisateurs_id];
-//     bdd.query ('INSERT INTO Posts (content, Utilisateurs_id, status_moderation) VALUES(?, ?, 0)', parameters, (err, res) => {
-//         if (err) throw err;
-      
-//     console.log ('Données reçues de Db:');
-//     console.log (res);
-//     console.log('publication envoyée !')
-//     });
-// }
-
 exports.modifyPost = (req, res, next) => {
     let parameters = [req.body.content, req.body.idPosts];
     bdd.query ('UPDATE Posts SET content= ? WHERE idPosts= ?', parameters, (err, res) => {

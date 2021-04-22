@@ -28,9 +28,29 @@ exports.validePost = (req, res, next) => {
       });
 }
 
+exports.deletePost = (req, res, next) => {
+  let parameters = req.params.idPosts;
+bdd.query ('DELETE FROM Posts WHERE idPosts = ?', parameters, (err, res) => {
+    if (err) throw err;
+  
+  console.log ('Données reçues de Db:');
+  console.log (res);
+  });
+}
+
 exports.valideComment = (req, res, next) => {
   let parameters = req.params.idComments;
 bdd.query ('UPDATE Comments SET status_moderation = 1 WHERE idComments = ?', parameters, (err, res) => {
+    if (err) throw err;
+  
+  console.log ('Données reçues de Db:');
+  console.log (res);
+  });
+}
+
+exports.deleteComment = (req, res, next) => {
+  let parameters = req.params.idComments;
+bdd.query ('DELETE FROM Comments WHERE idComments = ?', parameters, (err, res) => {
     if (err) throw err;
   
   console.log ('Données reçues de Db:');

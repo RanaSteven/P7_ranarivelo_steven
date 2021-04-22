@@ -224,11 +224,27 @@ header{
   color: white;
 }
 
+.marginInput{
+  margin: auto;
+  text-align: center;
+}
+
 .inputValidePost{ 
   background-color: rgb(0,120,20);
   border: none;
   padding: 5px;
-  margin: 0 auto 0;
+  margin: 0 5% 0;
+  border-radius: 5px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: white;
+}
+
+.inputUnvalidePost{ 
+  background-color: rgb(250,20,0);
+  border: none;
+  padding: 5px;
+  margin: 0 5% 0;
   border-radius: 5px;
   font-family: 'Open Sans', sans-serif;
   font-size: 15px;
@@ -244,10 +260,6 @@ header{
   font-family: 'Open Sans', sans-serif;
   font-size: 15px;
   color: white;
-}
-
-.marginInput{
-  text-align: center;
 }
 
 .case .uploadComments{ 

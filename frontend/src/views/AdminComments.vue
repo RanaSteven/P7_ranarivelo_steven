@@ -2,9 +2,12 @@
   <div class="corps">
     <h1>{{ sousTitre }}</h1>
     <div class="case" v-for="publication in publications" :key="publication">
-      <div>
+      <div class="marginInput">
       <p class="adminLabelComm">{{ publication.contents }}</p>
-      <input type="submit" class="inputValidePost" id="validComm" value="Valider le commentaire" @click="valideComment(publication.idComments)">
+        <div class="marginInput">
+        <input type="submit" class="inputValidePost" id="validComm" value="Valider le commentaire" @click="valideComment(publication.idComments)">
+        <input type="submit" class="inputUnvalidePost" id="validComm" value="Valider le commentaire" @click="deleteComment(publication.idComments)">
+        </div>
       </div>
     </div>
   </div>
